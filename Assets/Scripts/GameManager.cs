@@ -17,6 +17,14 @@ public class GameManager : MonoBehaviour
     private SpawnManager _spawnManager;
 
     [SerializeField]
+    private AudioClip[] _music;
+    private AudioSource _audioSource;
+
+    private Camera _mainCamera;
+    private Vector3 deathCamEndPos;
+    private Vector3 deathCamEndRot;
+
+    [SerializeField]
     private Canvas _ui;
 
     [SerializeField]
@@ -38,20 +46,48 @@ public class GameManager : MonoBehaviour
                 _currentScene = SCENES.NULL;
                 break;
         }
-
         if (_currentScene == SCENES.GAME)
         {
             _spawnManager.StartSpawning();
+            _mainCamera = Camera.main;
+            _audioSource = GetComponent<AudioSource>();
+            if (_audioSource == null)
+            {
+                Debug.LogError("GameManager::Start() AudioSource is null");
+            } else
+            {
+                _audioSource.clip = _music[0];
+                _audioSource.Play();
+            }
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        UpdateTimer();
-        DisplayTimer();
-        UpdateAmmo();
-        UpdateHealth();
+        if (_currentScene == SCENES.GAME)
+        {
+            UpdateTimer();
+            DisplayTimer();
+            UpdateAmmo();
+            UpdateHealth();
+            if (PlayerManager.instance.player.transform.GetComponent<PlayerController>().GetHealth() <= 0f)
+            {
+                PlayerManager.instance.playerMovementScript.GetComponent<FirstPersonAIO>().enabled = false;
+                _mainCamera.transform.position = Vector3.MoveTowards(_mainCamera.transform.position, deathCamEndPos, Time.deltaTime);
+                _mainCamera.transform.LookAt(deathCamEndRot);
+                if (_audioSource.clip != _music[1])
+                {
+                    _audioSource.clip = _music[1];
+                    _audioSource.Play();
+                    StartCoroutine(RestartLevel());
+                }
+            } else
+            {
+                deathCamEndPos = new Vector3(_mainCamera.transform.position.x, _mainCamera.transform.position.y + 10f, _mainCamera.transform.position.z - 15f);
+                deathCamEndRot = _mainCamera.transform.position;
+            }
+        }
     }
 
     void UpdateTimer()
@@ -93,4 +129,9 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 
+    IEnumerator RestartLevel()
+    {
+        yield return new WaitForSeconds(17f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
 }

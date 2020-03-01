@@ -21,6 +21,8 @@ public class Zombie : MonoBehaviour
     private Transform _target;
     private NavMeshAgent _agent;
     private GameObject _spawnManager;
+    [SerializeField]
+    private GameObject[] _pickups;
 
     private void Start()
     {
@@ -75,6 +77,11 @@ public class Zombie : MonoBehaviour
                         _attackTimer = _attackRate;
                     }
                     FaceTarget();
+                    if (PlayerManager.instance.player.GetComponent<PlayerController>().GetHealth() <= 0f)
+                    {
+                        _animator.SetBool("PlayerDead_b", true);
+                        GetComponent<Collider>().enabled = false;
+                    }
                 }
 
             }
@@ -111,6 +118,11 @@ public class Zombie : MonoBehaviour
             }
             _isDead = true;
             _spawnManager.GetComponent<SpawnManager>().ZombieDied();
+            if (Random.Range(0f, 100f) < 33.3f)
+            {
+                Vector3 pickupPos = new Vector3(this.transform.position.x, this.transform.position.y + 0.5f, this.transform.position.z);
+                Instantiate(_pickups[Random.Range(0, _pickups.Length)], pickupPos, Quaternion.Euler(0, Random.Range(0f, 360f), 0));
+            }
             Destroy(this.gameObject, 20f);
         }
     }

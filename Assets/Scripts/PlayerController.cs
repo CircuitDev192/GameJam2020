@@ -145,7 +145,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.R) && _canReload && _ammoReserve > 0)
+        if (Input.GetKeyDown(KeyCode.R) && _canReload && _ammoReserve > 0 && !_isSprinting)
         {
             _ammoReserve += _ammoCount;
             if (_ammoReserve > 30)
@@ -168,7 +168,6 @@ public class PlayerController : MonoBehaviour
 
     private void Shoot()
     {
-        _canReload = true;
         _ammoCount--;
         if (!_muzzleFlash.isPlaying)
         {
@@ -202,14 +201,22 @@ public class PlayerController : MonoBehaviour
         _currentHealth -= damage;
         if (_currentHealth <= 0f)
         {
-            //Die
-            Debug.Log("Dead");
+            _animator.SetBool("Death_b", true);
         }
     }
 
     public float GetHealth()
     {
         return _currentHealth;
+    }
+
+    public void AddHealth(float health)
+    {
+        _currentHealth += health;
+        if (_currentHealth > 100f)
+        {
+            _currentHealth = 100f;
+        }
     }
 
     public int GetAmmoCount(bool reserve)
@@ -221,6 +228,11 @@ public class PlayerController : MonoBehaviour
         {
             return _ammoCount;
         }
+    }
+
+    public void AddAmmo(int ammo)
+    {
+        _ammoReserve += ammo;
     }
 
     IEnumerator EndJump()
@@ -240,6 +252,7 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         _animator.SetBool("Shoot_b", false);
+        _canReload = true;
     }
 
     private void LockPosToCamera()
