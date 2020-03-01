@@ -22,7 +22,11 @@ public class PlayerController : MonoBehaviour
     private bool _canReload = false;
     private bool _isSprinting = false;
     private float _weaponDamage = 15f;
-    private float _health = 50f;
+    private bool _isReloading = false;
+    private float _maxHealth = 100f;
+    private float _currentHealth;
+    private int _ammoCount = 30;
+    private int _ammoReserve = 90;
     [SerializeField]
     private ParticleSystem _muzzleFlash;
 
@@ -35,6 +39,7 @@ public class PlayerController : MonoBehaviour
         }
         InitAnimator();
         _mainCamera = Camera.main;
+        _currentHealth = _maxHealth;
     }
 
     void InitAnimator()
@@ -59,39 +64,48 @@ public class PlayerController : MonoBehaviour
 
         if (!_isSprinting)
         {
-            if (!_fullAuto)
+            if (!_isReloading && _ammoCount > 0)
             {
-                if (Input.GetMouseButtonDown(0) && Time.time >= _nextTimeToFire)
+                if (!_fullAuto)
                 {
-                    _animator.SetBool("Shoot_b", true);
-                    _animator.SetBool("FullAuto_b", false);
-                    _nextTimeToFire = Time.time + _fireRate;
-                    Shoot();
-                    Debug.Log("You Shot");
-                    StartCoroutine(EndShoot());
-                }
-            }
-            else
-            {
-                if (Input.GetMouseButton(0))
-                {
-                    _animator.SetBool("Shoot_b", true);
-                    _animator.SetBool("FullAuto_b", true);
-                    if (Time.time >= _nextTimeToFireAuto)
+                    if (Input.GetMouseButtonDown(0) && Time.time >= _nextTimeToFire)
                     {
+                        _animator.SetBool("Shoot_b", true);
+                        _animator.SetBool("FullAuto_b", false);
+                        _nextTimeToFire = Time.time + _fireRate;
+                        _weaponDamage = 26f;
                         Shoot();
-                        _nextTimeToFireAuto = Time.time + _fireRateAuto;
                         Debug.Log("You Shot");
+                        StartCoroutine(EndShoot());
                     }
                 }
-                else if (Input.GetMouseButtonUp(0))
+                else
                 {
-                    _audioSource.PlayOneShot(_gunSounds[4], 1f);
+                    if (Input.GetMouseButton(0))
+                    {
+                        _animator.SetBool("Shoot_b", true);
+                        _animator.SetBool("FullAuto_b", true);
+                        if (Time.time >= _nextTimeToFireAuto)
+                        {
+                            _weaponDamage = 15f;
+                            Shoot();
+                            _nextTimeToFireAuto = Time.time + _fireRateAuto;
+                            Debug.Log("You Shot");
+                        }
+                    }
+                    else if (Input.GetMouseButtonUp(0))
+                    {
+                        _audioSource.PlayOneShot(_gunSounds[4], 1f);
+                    }
+                    else
+                    {
+                        StartCoroutine(EndShoot());
+                    }
                 }
-                else 
-                {
-                    StartCoroutine(EndShoot());
-                }
+            } else if (_ammoCount <= 0)
+            {
+                _animator.SetBool("Shoot_b", false);
+                _animator.SetBool("FullAuto_b", false);
             }
         }
                
@@ -131,9 +145,20 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.R) && _canReload)
+        if (Input.GetKeyDown(KeyCode.R) && _canReload && _ammoReserve > 0 && !_isSprinting)
         {
+            _ammoReserve += _ammoCount;
+            if (_ammoReserve > 30)
+            {
+                _ammoCount = 30;
+                _ammoReserve -= 30;
+            } else
+            {
+                _ammoCount = _ammoReserve;
+                _ammoReserve = 0;
+            }
             _canReload = false;
+            _isReloading = true;
             _animator.SetBool("Reload_b", true);
             _audioSource.PlayOneShot(_gunSounds[5], 1f);
             StartCoroutine(EndReload());
@@ -143,7 +168,7 @@ public class PlayerController : MonoBehaviour
 
     private void Shoot()
     {
-        _canReload = true;
+        _ammoCount--;
         if (!_muzzleFlash.isPlaying)
         {
             _muzzleFlash.Play();
@@ -173,12 +198,41 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        _health -= damage;
-        if (_health <= 0f)
+        _currentHealth -= damage;
+        if (_currentHealth <= 0f)
         {
-            //Die
-            Debug.Log("Dead");
+            _animator.SetBool("Death_b", true);
         }
+    }
+
+    public float GetHealth()
+    {
+        return _currentHealth;
+    }
+
+    public void AddHealth(float health)
+    {
+        _currentHealth += health;
+        if (_currentHealth > 100f)
+        {
+            _currentHealth = 100f;
+        }
+    }
+
+    public int GetAmmoCount(bool reserve)
+    {
+        if (reserve)
+        {
+            return _ammoReserve;
+        } else
+        {
+            return _ammoCount;
+        }
+    }
+
+    public void AddAmmo(int ammo)
+    {
+        _ammoReserve += ammo;
     }
 
     IEnumerator EndJump()
@@ -190,12 +244,15 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         _animator.SetBool("Reload_b", false);
+        yield return new WaitForSeconds(1.9f);
+        _isReloading = false;
     }
 
     IEnumerator EndShoot()
     {
         yield return new WaitForSeconds(0.1f);
         _animator.SetBool("Shoot_b", false);
+        _canReload = true;
     }
 
     private void LockPosToCamera()

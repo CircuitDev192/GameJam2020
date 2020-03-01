@@ -16,11 +16,13 @@ public class Zombie : MonoBehaviour
     private Animator _animator;
     private Collider _collider;
 
-    [SerializeField]
-    private float _lookRadius = 20f;
+    private float _lookRadius = 125f;
 
     private Transform _target;
     private NavMeshAgent _agent;
+    private GameObject _spawnManager;
+    [SerializeField]
+    private GameObject[] _pickups;
 
     private void Start()
     {
@@ -40,6 +42,13 @@ public class Zombie : MonoBehaviour
             Debug.LogError("Zombie::Start() Collider is null");
         }
 
+        _spawnManager = GameObject.FindWithTag("SpawnManager");
+        if (_spawnManager == null)
+        {
+            Debug.LogError("Zombie::Start() Spawn Manager is null");
+        }
+
+        _agent.speed = 4.5f;
         _animator.SetBool("Walking_b", false);
         _attackTimer = _attackRate;
         _target = PlayerManager.instance.player.transform;
@@ -52,7 +61,7 @@ public class Zombie : MonoBehaviour
             float distance = Vector3.Distance(this.transform.position, _target.transform.position);
             if (_attackTimer > 0)
             {
-                _attackTimer -= Time.time;
+                _attackTimer -= Time.deltaTime;
             }
 
             if (distance <= _lookRadius)
@@ -64,10 +73,15 @@ public class Zombie : MonoBehaviour
                 {
                     if (_attackTimer <= 0)
                     {
-                        PlayerManager.instance.player.GetComponent<PlayerController>().TakeDamage(10);
+                        PlayerManager.instance.player.GetComponent<PlayerController>().TakeDamage(8f);
                         _attackTimer = _attackRate;
                     }
                     FaceTarget();
+                    if (PlayerManager.instance.player.GetComponent<PlayerController>().GetHealth() <= 0f)
+                    {
+                        _animator.SetBool("PlayerDead_b", true);
+                        GetComponent<Collider>().enabled = false;
+                    }
                 }
 
             }
@@ -103,6 +117,12 @@ public class Zombie : MonoBehaviour
                 _bodyParts[i].GetComponent<Rigidbody>().drag = 1.5f;
             }
             _isDead = true;
+            _spawnManager.GetComponent<SpawnManager>().ZombieDied();
+            if (Random.Range(0f, 100f) < 33.3f)
+            {
+                Vector3 pickupPos = new Vector3(this.transform.position.x, this.transform.position.y + 0.5f, this.transform.position.z);
+                Instantiate(_pickups[Random.Range(0, _pickups.Length)], pickupPos, Quaternion.Euler(0, Random.Range(0f, 360f), 0));
+            }
             Destroy(this.gameObject, 20f);
         }
     }

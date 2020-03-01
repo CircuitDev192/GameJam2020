@@ -2985,7 +2985,9 @@ MonoBehaviour:
   - {fileID: 6592198861965454749}
   - {fileID: 6592198861965283149}
   - {fileID: 6592198861965353155}
-  _lookRadius: 20
+  _pickups:
+  - {fileID: 7170571353883357103, guid: 55e8aca901cd27a46b4e61f3210345ff, type: 3}
+  - {fileID: 5212577589404435403, guid: 2a490b7b25a41144dbec8b0aeeb1137e, type: 3}
 --- !u!136 &6592198861965272215
 CapsuleCollider:
   m_ObjectHideFlags: 0
