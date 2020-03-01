@@ -45,6 +45,7 @@ public class PlayerController : MonoBehaviour
             Debug.LogError("PlayerController::Start() Animator is null");
         }
         _animator.SetFloat("Head_Horizontal_f", -0.6f);
+        _animator.SetInteger("Animation_int", 0);
         _animator.SetFloat("Head_Vertical_f", 0.0f);
         _animator.SetFloat("Body_Horizontal_f", 0.6f);
         _animator.SetFloat("Body_Vertical_f", 0.0f);
