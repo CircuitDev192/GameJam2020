@@ -23,7 +23,7 @@ public class PlayerController : MonoBehaviour
     private bool _isSprinting = false;
     private float _weaponDamage = 15f;
     private bool _isReloading = false;
-    private float _maxHealth = 50f;
+    private float _maxHealth = 100f;
     private float _currentHealth;
     private int _ammoCount = 30;
     private int _ammoReserve = 90;

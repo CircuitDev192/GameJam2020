@@ -71,7 +71,7 @@ public class Zombie : MonoBehaviour
                 {
                     if (_attackTimer <= 0)
                     {
-                        PlayerManager.instance.player.GetComponent<PlayerController>().TakeDamage(10f);
+                        PlayerManager.instance.player.GetComponent<PlayerController>().TakeDamage(8f);
                         _attackTimer = _attackRate;
                     }
                     FaceTarget();
