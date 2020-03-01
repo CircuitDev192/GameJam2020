@@ -59,7 +59,7 @@ public class Zombie : MonoBehaviour
             float distance = Vector3.Distance(this.transform.position, _target.transform.position);
             if (_attackTimer > 0)
             {
-                _attackTimer -= Time.time;
+                _attackTimer -= Time.deltaTime;
             }
 
             if (distance <= _lookRadius)
@@ -71,7 +71,7 @@ public class Zombie : MonoBehaviour
                 {
                     if (_attackTimer <= 0)
                     {
-                        PlayerManager.instance.player.GetComponent<PlayerController>().TakeDamage(10);
+                        PlayerManager.instance.player.GetComponent<PlayerController>().TakeDamage(10f);
                         _attackTimer = _attackRate;
                     }
                     FaceTarget();

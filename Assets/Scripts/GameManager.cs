@@ -51,6 +51,7 @@ public class GameManager : MonoBehaviour
         UpdateTimer();
         DisplayTimer();
         UpdateAmmo();
+        UpdateHealth();
     }
 
     void UpdateTimer()
@@ -80,6 +81,11 @@ public class GameManager : MonoBehaviour
         string magAmmo = (PlayerManager.instance.player.transform.GetComponent<PlayerController>().GetAmmoCount(false).ToString());
         string reserveAmmo = (PlayerManager.instance.player.transform.GetComponent<PlayerController>().GetAmmoCount(true).ToString());
         _ui.transform.Find("AmmoText").GetComponent<Text>().text = magAmmo + "/" + reserveAmmo;
+    }
+
+    void UpdateHealth()
+    {
+        _ui.transform.Find("HealthBar").GetComponent<Slider>().value = PlayerManager.instance.player.transform.GetComponent<PlayerController>().GetHealth();
     }
 
     public void PlayGame()

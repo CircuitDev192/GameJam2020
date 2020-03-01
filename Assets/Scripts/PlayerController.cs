@@ -23,7 +23,8 @@ public class PlayerController : MonoBehaviour
     private bool _isSprinting = false;
     private float _weaponDamage = 15f;
     private bool _isReloading = false;
-    private float _health = 50f;
+    private float _maxHealth = 50f;
+    private float _currentHealth;
     private int _ammoCount = 30;
     private int _ammoReserve = 90;
     [SerializeField]
@@ -38,6 +39,7 @@ public class PlayerController : MonoBehaviour
         }
         InitAnimator();
         _mainCamera = Camera.main;
+        _currentHealth = _maxHealth;
     }
 
     void InitAnimator()
@@ -197,12 +199,17 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(float damage)
     {
-        _health -= damage;
-        if (_health <= 0f)
+        _currentHealth -= damage;
+        if (_currentHealth <= 0f)
         {
             //Die
             Debug.Log("Dead");
         }
+    }
+
+    public float GetHealth()
+    {
+        return _currentHealth;
     }
 
     public int GetAmmoCount(bool reserve)
