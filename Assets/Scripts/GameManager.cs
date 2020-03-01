@@ -12,6 +12,9 @@ public class GameManager : MonoBehaviour
         GAME
     }
 
+    [SerializeField]
+    private SpawnManager _spawnManager;
+
     private SCENES _currentScene;
     // Start is called before the first frame update
     void Start()
@@ -27,7 +30,12 @@ public class GameManager : MonoBehaviour
             default:
                 _currentScene = SCENES.NULL;
                 break;
-        } 
+        }
+
+        if (_currentScene == SCENES.GAME)
+        {
+            _spawnManager.StartSpawning();
+        }
     }
 
     // Update is called once per frame

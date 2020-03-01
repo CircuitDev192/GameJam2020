@@ -16,11 +16,11 @@ public class Zombie : MonoBehaviour
     private Animator _animator;
     private Collider _collider;
 
-    [SerializeField]
-    private float _lookRadius = 20f;
+    private float _lookRadius = 125f;
 
     private Transform _target;
     private NavMeshAgent _agent;
+    private GameObject _spawnManager;
 
     private void Start()
     {
@@ -40,6 +40,13 @@ public class Zombie : MonoBehaviour
             Debug.LogError("Zombie::Start() Collider is null");
         }
 
+        _spawnManager = GameObject.FindWithTag("SpawnManager");
+        if (_spawnManager == null)
+        {
+            Debug.LogError("Zombie::Start() Spawn Manager is null");
+        }
+
+        _agent.speed = 4.5f;
         _animator.SetBool("Walking_b", false);
         _attackTimer = _attackRate;
         _target = PlayerManager.instance.player.transform;
@@ -103,6 +110,7 @@ public class Zombie : MonoBehaviour
                 _bodyParts[i].GetComponent<Rigidbody>().drag = 1.5f;
             }
             _isDead = true;
+            _spawnManager.GetComponent<SpawnManager>().ZombieDied();
             Destroy(this.gameObject, 20f);
         }
     }

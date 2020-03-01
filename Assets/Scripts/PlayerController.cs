@@ -22,6 +22,7 @@ public class PlayerController : MonoBehaviour
     private bool _canReload = false;
     private bool _isSprinting = false;
     private float _weaponDamage = 15f;
+    private bool _isReloading = false;
     private float _health = 50f;
     [SerializeField]
     private ParticleSystem _muzzleFlash;
@@ -59,38 +60,43 @@ public class PlayerController : MonoBehaviour
 
         if (!_isSprinting)
         {
-            if (!_fullAuto)
+            if (!_isReloading)
             {
-                if (Input.GetMouseButtonDown(0) && Time.time >= _nextTimeToFire)
+                if (!_fullAuto)
                 {
-                    _animator.SetBool("Shoot_b", true);
-                    _animator.SetBool("FullAuto_b", false);
-                    _nextTimeToFire = Time.time + _fireRate;
-                    Shoot();
-                    Debug.Log("You Shot");
-                    StartCoroutine(EndShoot());
-                }
-            }
-            else
-            {
-                if (Input.GetMouseButton(0))
-                {
-                    _animator.SetBool("Shoot_b", true);
-                    _animator.SetBool("FullAuto_b", true);
-                    if (Time.time >= _nextTimeToFireAuto)
+                    if (Input.GetMouseButtonDown(0) && Time.time >= _nextTimeToFire)
                     {
+                        _animator.SetBool("Shoot_b", true);
+                        _animator.SetBool("FullAuto_b", false);
+                        _nextTimeToFire = Time.time + _fireRate;
+                        _weaponDamage = 26f;
                         Shoot();
-                        _nextTimeToFireAuto = Time.time + _fireRateAuto;
                         Debug.Log("You Shot");
+                        StartCoroutine(EndShoot());
                     }
                 }
-                else if (Input.GetMouseButtonUp(0))
+                else
                 {
-                    _audioSource.PlayOneShot(_gunSounds[4], 1f);
-                }
-                else 
-                {
-                    StartCoroutine(EndShoot());
+                    if (Input.GetMouseButton(0))
+                    {
+                        _animator.SetBool("Shoot_b", true);
+                        _animator.SetBool("FullAuto_b", true);
+                        if (Time.time >= _nextTimeToFireAuto)
+                        {
+                            _weaponDamage = 15f;
+                            Shoot();
+                            _nextTimeToFireAuto = Time.time + _fireRateAuto;
+                            Debug.Log("You Shot");
+                        }
+                    }
+                    else if (Input.GetMouseButtonUp(0))
+                    {
+                        _audioSource.PlayOneShot(_gunSounds[4], 1f);
+                    }
+                    else
+                    {
+                        StartCoroutine(EndShoot());
+                    }
                 }
             }
         }
@@ -134,6 +140,7 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R) && _canReload)
         {
             _canReload = false;
+            _isReloading = true;
             _animator.SetBool("Reload_b", true);
             _audioSource.PlayOneShot(_gunSounds[5], 1f);
             StartCoroutine(EndReload());
@@ -190,6 +197,8 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         _animator.SetBool("Reload_b", false);
+        yield return new WaitForSeconds(1.9f);
+        _isReloading = false;
     }
 
     IEnumerator EndShoot()
