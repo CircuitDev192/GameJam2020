@@ -24,6 +24,8 @@ public class PlayerController : MonoBehaviour
     private float _weaponDamage = 15f;
     private bool _isReloading = false;
     private float _health = 50f;
+    private int _ammoCount = 30;
+    private int _ammoReserve = 90;
     [SerializeField]
     private ParticleSystem _muzzleFlash;
 
@@ -60,7 +62,7 @@ public class PlayerController : MonoBehaviour
 
         if (!_isSprinting)
         {
-            if (!_isReloading)
+            if (!_isReloading && _ammoCount > 0)
             {
                 if (!_fullAuto)
                 {
@@ -98,6 +100,10 @@ public class PlayerController : MonoBehaviour
                         StartCoroutine(EndShoot());
                     }
                 }
+            } else if (_ammoCount <= 0)
+            {
+                _animator.SetBool("Shoot_b", false);
+                _animator.SetBool("FullAuto_b", false);
             }
         }
                
@@ -137,8 +143,18 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.R) && _canReload)
+        if (Input.GetKeyDown(KeyCode.R) && _canReload && _ammoReserve > 0)
         {
+            _ammoReserve += _ammoCount;
+            if (_ammoReserve > 30)
+            {
+                _ammoCount = 30;
+                _ammoReserve -= 30;
+            } else
+            {
+                _ammoCount = _ammoReserve;
+                _ammoReserve = 0;
+            }
             _canReload = false;
             _isReloading = true;
             _animator.SetBool("Reload_b", true);
@@ -151,6 +167,7 @@ public class PlayerController : MonoBehaviour
     private void Shoot()
     {
         _canReload = true;
+        _ammoCount--;
         if (!_muzzleFlash.isPlaying)
         {
             _muzzleFlash.Play();
@@ -185,6 +202,17 @@ public class PlayerController : MonoBehaviour
         {
             //Die
             Debug.Log("Dead");
+        }
+    }
+
+    public int GetAmmoCount(bool reserve)
+    {
+        if (reserve)
+        {
+            return _ammoReserve;
+        } else
+        {
+            return _ammoCount;
         }
     }
 
