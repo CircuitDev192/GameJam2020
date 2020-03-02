@@ -6,6 +6,18 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+
+    #region Singleton
+
+    public static GameManager instance;
+
+    void Awake()
+    {
+        instance = this;
+    }
+
+    #endregion
+
     enum SCENES
     {
         NULL,
@@ -136,6 +148,11 @@ public class GameManager : MonoBehaviour
     public void PlayGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void EndGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 
     IEnumerator RestartLevel()

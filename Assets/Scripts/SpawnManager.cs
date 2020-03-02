@@ -10,7 +10,7 @@ public class SpawnManager : MonoBehaviour
     [SerializeField]
     private GameObject[] _zombies;
     [SerializeField]
-    private int _maxZombies = 10;
+    private int _maxZombies = 20;
     private int _currentZombies;
 
     public void StartSpawning()

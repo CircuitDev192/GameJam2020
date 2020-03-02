@@ -16,6 +16,8 @@ public class HelicopterController : MonoBehaviour
     private int _lastWaypoint = 0;
     [SerializeField]
     private GameObject[] _waypoints;
+    [SerializeField]
+    private GameObject _playerExit;
 
 
     // Start is called before the first frame update
@@ -44,7 +46,10 @@ public class HelicopterController : MonoBehaviour
             transform.position = Vector3.MoveTowards(transform.position, _waypoints[_lastWaypoint].transform.position, _speed * Time.deltaTime);
             if (transform.position == _waypoints[_lastWaypoint].transform.position)
             {
-                _lastWaypoint++;
+                if (transform.position != _waypoints[_waypoints.Length - 1].transform.position)
+                {
+                    _lastWaypoint++;
+                }
             }
             if (transform.position == _waypoints[_waypoints.Length - 2].transform.position)
             {
@@ -65,6 +70,7 @@ public class HelicopterController : MonoBehaviour
     private void StartOpenDoor()
     {
         _doorOpen = true;
+        _playerExit.SetActive(true);
     }
 
     IEnumerator LevelHelicopter()
