@@ -246,6 +246,7 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool("Reload_b", false);
         yield return new WaitForSeconds(1.9f);
         _isReloading = false;
+        _canReload = false;
     }
 
     IEnumerator EndShoot()
