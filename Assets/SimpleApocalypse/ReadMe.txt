@@ -43,7 +43,7 @@ Animation_int - selects an idle animation to play
 4 = Sexy Dance
 5 = Smoking
 6 = Salute
-7 = Wipe Mount
+7 = Wipe Mouth
 8 = Leaning against wall
 9 = Sitting on Ground
 

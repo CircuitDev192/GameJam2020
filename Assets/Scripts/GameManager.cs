@@ -6,6 +6,18 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
+
+    #region Singleton
+
+    public static GameManager instance;
+
+    void Awake()
+    {
+        instance = this;
+    }
+
+    #endregion
+
     enum SCENES
     {
         NULL,
@@ -29,6 +41,10 @@ public class GameManager : MonoBehaviour
 
     [SerializeField]
     private float _timer = 150f;
+
+    [SerializeField]
+    private GameObject _helicopter;
+    private bool _heliStarted = false;
 
     private SCENES _currentScene;
     // Start is called before the first frame update
@@ -96,6 +112,11 @@ public class GameManager : MonoBehaviour
         {
             _timer -= Time.deltaTime;
         }
+        if (_timer < 30f && !_heliStarted)
+        {
+            _heliStarted = true;
+            _helicopter.transform.GetComponent<HelicopterController>().StartMovement();
+        }
     }
 
     void DisplayTimer()
@@ -127,6 +148,11 @@ public class GameManager : MonoBehaviour
     public void PlayGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public void EndGame()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
     }
 
     IEnumerator RestartLevel()

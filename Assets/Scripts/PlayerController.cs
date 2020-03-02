@@ -29,6 +29,10 @@ public class PlayerController : MonoBehaviour
     private int _ammoReserve = 90;
     [SerializeField]
     private ParticleSystem _muzzleFlash;
+    [SerializeField]
+    private GameObject _bloodSplatter;
+    [SerializeField]
+    private GameObject _hitEffect;
 
     void Start()
     {
@@ -145,7 +149,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.R) && _canReload && _ammoReserve > 0 && !_isSprinting)
+        if (Input.GetKeyDown(KeyCode.R) && _canReload && !_isReloading && _ammoReserve > 0 && !_isSprinting)
         {
             _ammoReserve += _ammoCount;
             if (_ammoReserve > 30)
@@ -192,6 +196,12 @@ public class PlayerController : MonoBehaviour
             if (zombie != null)
             {
                 zombie.TakeDamage(_weaponDamage);
+                GameObject _bloodObject = Instantiate(_bloodSplatter, hit.point, Quaternion.LookRotation(hit.normal));
+                Destroy(_bloodObject, 2.0f);
+            } else
+            {
+                GameObject _hitObject = Instantiate(_hitEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                Destroy(_hitObject, 2.0f);
             }
         }
     }
@@ -246,6 +256,7 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool("Reload_b", false);
         yield return new WaitForSeconds(1.9f);
         _isReloading = false;
+        _canReload = false;
     }
 
     IEnumerator EndShoot()
