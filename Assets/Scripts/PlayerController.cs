@@ -29,6 +29,10 @@ public class PlayerController : MonoBehaviour
     private int _ammoReserve = 90;
     [SerializeField]
     private ParticleSystem _muzzleFlash;
+    [SerializeField]
+    private GameObject _bloodSplatter;
+    [SerializeField]
+    private GameObject _hitEffect;
 
     void Start()
     {
@@ -192,6 +196,12 @@ public class PlayerController : MonoBehaviour
             if (zombie != null)
             {
                 zombie.TakeDamage(_weaponDamage);
+                GameObject _bloodObject = Instantiate(_bloodSplatter, hit.point, Quaternion.LookRotation(hit.normal));
+                Destroy(_bloodObject, 2.0f);
+            } else
+            {
+                GameObject _hitObject = Instantiate(_hitEffect, hit.point, Quaternion.LookRotation(hit.normal));
+                Destroy(_hitObject, 2.0f);
             }
         }
     }
