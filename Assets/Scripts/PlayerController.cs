@@ -108,6 +108,10 @@ public class PlayerController : MonoBehaviour
                 }
             } else if (_ammoCount <= 0)
             {
+                if (_animator.GetBool("Shoot_b") && _animator.GetBool("FullAuto_b"))
+                {
+                    _audioSource.PlayOneShot(_gunSounds[4], 1f);
+                }
                 _animator.SetBool("Shoot_b", false);
                 _animator.SetBool("FullAuto_b", false);
             }
