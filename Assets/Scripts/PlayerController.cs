@@ -145,7 +145,7 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (Input.GetKeyDown(KeyCode.R) && _canReload && _ammoReserve > 0 && !_isSprinting)
+        if (Input.GetKeyDown(KeyCode.R) && _canReload && !_isReloading && _ammoReserve > 0 && !_isSprinting)
         {
             _ammoReserve += _ammoCount;
             if (_ammoReserve > 30)
