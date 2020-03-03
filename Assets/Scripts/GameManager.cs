@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     private GameObject _helicopter;
     private bool _heliStarted = false;
+    private bool _playerDead = false;
 
     private SCENES _currentScene;
     // Start is called before the first frame update
@@ -96,6 +97,15 @@ public class GameManager : MonoBehaviour
                 {
                     _audioSource.clip = _music[1];
                     _audioSource.Play();
+
+                    _ui.transform.Find("TimerText").gameObject.SetActive(false);
+                    _ui.transform.Find("DeadText").gameObject.SetActive(true);
+                    _ui.transform.Find("DeadText").GetComponent<Animator>().SetTrigger("PlayerDead");
+                    _ui.transform.Find("AmmoText").gameObject.SetActive(false);
+                    PlayerManager.instance.player.transform.GetComponent<PlayerController>().enabled = false;
+                    GameObject.FindGameObjectWithTag("Player").GetComponent<FirstPersonAIO>().enabled = false;
+                    _ui.transform.Find("HealthBar").gameObject.SetActive(false);
+
                     StartCoroutine(RestartLevel());
                 }
             } else
@@ -125,10 +135,11 @@ public class GameManager : MonoBehaviour
         string sec = (_timer % 60).ToString("f2");
         if (_timer > 0f)
         {
-            _ui.transform.Find("TimerText").GetComponent<Text>().text = min + ":" + sec;
-        } else
+            _ui.transform.Find("TimerText").GetComponent<Text>().text = "Time until exfil: " + min + ":" + sec;
+        }
+        else
         {
-            _ui.transform.Find("TimerText").GetComponent<Text>().text = "";
+            _ui.transform.Find("TimerText").GetComponent<Text>().text = "Get to the LZ!";
             _spawnManager.StopSpawning();
         }
     }
@@ -141,7 +152,7 @@ public class GameManager : MonoBehaviour
     }
 
     void UpdateHealth()
-    {
+    { 
         _ui.transform.Find("HealthBar").GetComponent<Slider>().value = PlayerManager.instance.player.transform.GetComponent<PlayerController>().GetHealth();
     }
 

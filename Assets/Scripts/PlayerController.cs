@@ -267,6 +267,7 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(0.1f);
         _animator.SetBool("Shoot_b", false);
+        yield return new WaitForSeconds(0.6f);
         _canReload = true;
     }
 
