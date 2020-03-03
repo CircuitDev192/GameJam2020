@@ -133,7 +133,7 @@ public class GameManager : MonoBehaviour
     {
         _audioSource.clip = _music[2];
         _audioSource.Play();
-
+        _ui.transform.Find("Credits").GetComponent<Animator>().SetTrigger("StartCredits");
     }
 
     void UpdateTimer()
