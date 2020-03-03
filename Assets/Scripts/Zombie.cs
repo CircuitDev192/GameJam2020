@@ -56,7 +56,7 @@ public class Zombie : MonoBehaviour
 
     private void Update()
     {
-        if (!_isDead)
+        if (!_isDead && _target != null)
         {
             float distance = Vector3.Distance(this.transform.position, _target.transform.position);
             if (_attackTimer > 0)

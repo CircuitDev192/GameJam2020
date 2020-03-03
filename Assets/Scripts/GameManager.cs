@@ -98,13 +98,7 @@ public class GameManager : MonoBehaviour
                     _audioSource.clip = _music[1];
                     _audioSource.Play();
 
-                    _ui.transform.Find("TimerText").gameObject.SetActive(false);
-                    _ui.transform.Find("DeadText").gameObject.SetActive(true);
-                    _ui.transform.Find("DeadText").GetComponent<Animator>().SetTrigger("PlayerDead");
-                    _ui.transform.Find("AmmoText").gameObject.SetActive(false);
-                    PlayerManager.instance.player.transform.GetComponent<PlayerController>().enabled = false;
-                    GameObject.FindGameObjectWithTag("Player").GetComponent<FirstPersonAIO>().enabled = false;
-                    _ui.transform.Find("HealthBar").gameObject.SetActive(false);
+                    KillPlayer();
 
                     StartCoroutine(RestartLevel());
                 }
@@ -116,13 +110,32 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void DestroyPlayer()
+    {
+        _ui.transform.Find("TimerText").gameObject.SetActive(false);
+        _ui.transform.Find("AmmoText").gameObject.SetActive(false);
+        Destroy(PlayerManager.instance.playerMovementScript.gameObject);
+        _ui.transform.Find("HealthBar").gameObject.SetActive(false);
+    }
+
+    private void KillPlayer()
+    {
+        _ui.transform.Find("TimerText").gameObject.SetActive(false);
+        _ui.transform.Find("DeadText").gameObject.SetActive(true);
+        _ui.transform.Find("DeadText").GetComponent<Animator>().SetTrigger("PlayerDead");
+        _ui.transform.Find("AmmoText").gameObject.SetActive(false);
+        PlayerManager.instance.player.transform.GetComponent<PlayerController>().enabled = false;
+        GameObject.FindGameObjectWithTag("Player").GetComponent<FirstPersonAIO>().enabled = false;
+        _ui.transform.Find("HealthBar").gameObject.SetActive(false);
+    }
+
     void UpdateTimer()
     {
         if (_timer > 0f)
         {
             _timer -= Time.deltaTime;
         }
-        if (_timer < 30f && !_heliStarted)
+        if (_timer < 150f && !_heliStarted)
         {
             _heliStarted = true;
             _helicopter.transform.GetComponent<HelicopterController>().StartMovement();

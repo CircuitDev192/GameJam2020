@@ -9,6 +9,7 @@ public class HelicopterController : MonoBehaviour
     [SerializeField]
     private bool _doorOpen = false;
     private bool _startPath = false;
+    private bool _endPath = false;
     private Vector3 _doorOpenPos;
     private Vector3 _doorClosePos;
     [SerializeField]
@@ -17,12 +18,17 @@ public class HelicopterController : MonoBehaviour
     [SerializeField]
     private GameObject[] _waypoints;
     [SerializeField]
+    private GameObject[] _endWaypoints;
+    private int _lastEndWaypoint = 0;
+    [SerializeField]
     private GameObject _playerExit;
+    private Camera _camera;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        _camera = Camera.main;
         _doorOpenPos = new Vector3(_door.transform.localPosition.x, _door.transform.localPosition.y, _door.transform.localPosition.z + 2.81f);
         _doorClosePos = new Vector3(_door.transform.localPosition.x, _door.transform.localPosition.y, _door.transform.localPosition.z);
         transform.localRotation = Quaternion.Euler(20, 0, 0);
@@ -60,6 +66,31 @@ public class HelicopterController : MonoBehaviour
                 StartOpenDoor();
             }
         }
+        else if (_endPath)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, _endWaypoints[_lastEndWaypoint].transform.position, _speed * Time.deltaTime);
+            if (transform.position == _endWaypoints[_lastEndWaypoint].transform.position)
+            {
+                if (transform.position != _endWaypoints[_endWaypoints.Length - 1].transform.position)
+                { 
+                    _lastEndWaypoint++;
+                    if (transform.position != _endWaypoints[0].transform.position)
+                    {
+                        StartCoroutine(TurnHelicopter());
+                    }
+                }
+            }
+            if (transform.position == _endWaypoints[_endWaypoints.Length - 2].transform.position)
+            {
+                StartCloseDoor();
+            }
+        }
+
+        if (_camera.transform.IsChildOf(this.transform) && _startPath)
+        {
+            _startPath = false;
+            StartCoroutine(GetPlayerIntoHeli());
+        }
     }
 
     public void StartMovement()
@@ -73,12 +104,46 @@ public class HelicopterController : MonoBehaviour
         _playerExit.SetActive(true);
     }
 
+    private void StartCloseDoor()
+    {
+        _doorOpen = false;
+        _playerExit.SetActive(false);
+    }
+
     IEnumerator LevelHelicopter()
     {
         _speed = 5f;
         while (transform.localRotation != Quaternion.Euler(0, 0, 0))
         {
             transform.localRotation *= Quaternion.AngleAxis(10 * Time.deltaTime, Vector3.left);
+            yield return null;
+        }
+    }
+
+    IEnumerator TurnHelicopter()
+    {
+        Vector3 targetPos = _endWaypoints[_lastEndWaypoint].transform.position;
+        targetPos.y = this.transform.position.y - 20;
+        Quaternion targetRotation = Quaternion.LookRotation(targetPos - this.transform.position);
+        while (transform.rotation != targetRotation)
+        {
+            transform.rotation = Quaternion.Slerp(this.transform.rotation, targetRotation, Time.deltaTime);
+            yield return null;
+        }
+    }
+
+    IEnumerator GetPlayerIntoHeli()
+    {
+        Vector3 _cameraEndPos = new Vector3(-0.44f, 2.98f, -0.45f);
+        Quaternion _cameraEndRot = Quaternion.Euler(25.1f, -131.59f, 3.75f);
+        while (_camera.transform.localRotation != _cameraEndRot || _camera.transform.localPosition != _cameraEndPos)
+        {
+            _camera.transform.localRotation = Quaternion.Lerp(_camera.transform.localRotation, _cameraEndRot, Time.deltaTime);
+            _camera.transform.localPosition = Vector3.MoveTowards(_camera.transform.localPosition, _cameraEndPos, 3 * Time.deltaTime);
+            if (_camera.transform.localPosition == _cameraEndPos)
+            {
+                _endPath = true;
+            }
             yield return null;
         }
     }
