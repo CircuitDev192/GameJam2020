@@ -40,7 +40,7 @@ public class GameManager : MonoBehaviour
     private Canvas _ui;
 
     [SerializeField]
-    private float _timer = 150f;
+    private float _timer = 165f;
 
     [SerializeField]
     private GameObject _helicopter;
@@ -129,13 +129,20 @@ public class GameManager : MonoBehaviour
         _ui.transform.Find("HealthBar").gameObject.SetActive(false);
     }
 
+    public void EndSequence()
+    {
+        _audioSource.clip = _music[2];
+        _audioSource.Play();
+
+    }
+
     void UpdateTimer()
     {
         if (_timer > 0f)
         {
             _timer -= Time.deltaTime;
         }
-        if (_timer < 150f && !_heliStarted)
+        if (_timer < 30f && !_heliStarted)
         {
             _heliStarted = true;
             _helicopter.transform.GetComponent<HelicopterController>().StartMovement();

@@ -22,6 +22,7 @@ public class HelicopterController : MonoBehaviour
     private int _lastEndWaypoint = 0;
     [SerializeField]
     private GameObject _playerExit;
+    private bool _endSequenceStarted = false;
     private Camera _camera;
 
 
@@ -77,6 +78,11 @@ public class HelicopterController : MonoBehaviour
                     if (transform.position != _endWaypoints[0].transform.position)
                     {
                         StartCoroutine(TurnHelicopter());
+                        if (!_endSequenceStarted)
+                        {
+                            _endSequenceStarted = true;
+                            GameManager.instance.EndSequence();
+                        }
                     }
                 }
             }
