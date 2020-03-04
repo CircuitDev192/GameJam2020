@@ -96,6 +96,7 @@ public class GameManager : MonoBehaviour
                 if (_audioSource.clip != _music[1])
                 {
                     _audioSource.clip = _music[1];
+                    _audioSource.volume = 0.3f;
                     _audioSource.Play();
 
                     KillPlayer();
@@ -135,6 +136,12 @@ public class GameManager : MonoBehaviour
         _audioSource.volume = 0.25f;
         _audioSource.Play();
         _ui.transform.Find("Credits").GetComponent<Animator>().SetTrigger("StartCredits");
+        StartCoroutine(BackToMenuCredits());
+    }
+
+    public void FadeToBlack()
+    {
+        _ui.transform.Find("FadeToBlack").GetComponent<Animator>().SetBool("Fade", true);
     }
 
     void UpdateTimer()
@@ -189,7 +196,15 @@ public class GameManager : MonoBehaviour
 
     IEnumerator RestartLevel()
     {
-        yield return new WaitForSeconds(17f);
+        yield return new WaitForSeconds(10f);
+        FadeToBlack();
+        yield return new WaitForSeconds(7f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    IEnumerator BackToMenuCredits()
+    {
+        yield return new WaitForSeconds(105f);
+        EndGame();
     }
 }

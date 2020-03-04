@@ -112,6 +112,10 @@ public class PlayerController : MonoBehaviour
                 {
                     _audioSource.PlayOneShot(_gunSounds[4], 1f);
                 }
+                if (Input.GetMouseButtonDown(0))
+                {
+                    _audioSource.PlayOneShot(_gunSounds[6], 1f);
+                }
                 _animator.SetBool("Shoot_b", false);
                 _animator.SetBool("FullAuto_b", false);
             }

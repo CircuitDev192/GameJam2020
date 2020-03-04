@@ -126,6 +126,7 @@ public class HelicopterController : MonoBehaviour
     {
         _doorOpen = false;
         _playerExit.SetActive(false);
+        GameManager.instance.FadeToBlack();
     }
 
     IEnumerator LevelHelicopter()
