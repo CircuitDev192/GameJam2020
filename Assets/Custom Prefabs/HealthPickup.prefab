@@ -104,8 +104,8 @@ GameObject:
   - component: {fileID: 7590818673027229078}
   - component: {fileID: 7590818673024379510}
   - component: {fileID: 7590818673025413232}
-  - component: {fileID: 7619686197419458588}
   - component: {fileID: 4882008636871925782}
+  - component: {fileID: 1566460005440493472}
   m_Layer: 0
   m_Name: HealthPickup
   m_TagString: Untagged
@@ -173,20 +173,6 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!64 &7619686197419458588
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7590818673027604308}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Convex: 1
-  m_CookingOptions: 14
-  m_Mesh: {fileID: 43145372095353758, guid: ddfaf619da0e5f74b94f5150b9292550, type: 2}
 --- !u!114 &4882008636871925782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,3 +188,16 @@ MonoBehaviour:
   _isAmmo: 0
   _pointA: {fileID: 5212577590267475454}
   _pointB: {fileID: 5212577588539677528}
+--- !u!135 &1566460005440493472
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7590818673027604308}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 1
+  m_Center: {x: 0, y: 0.11820353, z: 0.00000011920929}
