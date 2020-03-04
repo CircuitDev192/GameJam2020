@@ -96,6 +96,7 @@ public class GameManager : MonoBehaviour
                 if (_audioSource.clip != _music[1])
                 {
                     _audioSource.clip = _music[1];
+                    _audioSource.volume = 0.3f;
                     _audioSource.Play();
 
                     KillPlayer();
@@ -195,9 +196,9 @@ public class GameManager : MonoBehaviour
 
     IEnumerator RestartLevel()
     {
-        yield return new WaitForSeconds(14f);
+        yield return new WaitForSeconds(10f);
         FadeToBlack();
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(7f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 

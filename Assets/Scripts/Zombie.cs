@@ -97,6 +97,7 @@ public class Zombie : MonoBehaviour
                     if (PlayerManager.instance.player.GetComponent<PlayerController>().GetHealth() <= 0f)
                     {
                         _animator.SetBool("PlayerDead_b", true);
+                        _audioSource.volume = 0f;
                         GetComponent<Collider>().enabled = false;
                     }
                 }
