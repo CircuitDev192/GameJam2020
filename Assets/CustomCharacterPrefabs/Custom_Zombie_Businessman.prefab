@@ -76,7 +76,7 @@ BoxCollider:
   m_GameObject: {fileID: 6592198861965232967}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.0373999, y: 0.56523234, z: 0.5652323}
   m_Center: {x: 0.2995911, y: -0.28261623, z: 0}
@@ -89,10 +89,10 @@ Rigidbody:
   m_GameObject: {fileID: 6592198861965232967}
   serializedVersion: 2
   m_Mass: 5.13
-  m_Drag: 0
+  m_Drag: 1.5
   m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -699,7 +699,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 6592198861965243107}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.11235651
   m_Height: 0.37452167
   m_Direction: 0
@@ -713,10 +713,10 @@ Rigidbody:
   m_GameObject: {fileID: 6592198861965243107}
   serializedVersion: 2
   m_Mass: 1.875
-  m_Drag: 0
+  m_Drag: 1.5
   m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -2867,6 +2867,7 @@ GameObject:
   - component: {fileID: 6592198861964989175}
   - component: {fileID: 6592198861974804911}
   - component: {fileID: 6592198861965272214}
+  - component: {fileID: -3459744528858164798}
   - component: {fileID: 6592198861965272215}
   - component: {fileID: 6592198861965272212}
   m_Layer: 0
@@ -2988,6 +2989,123 @@ MonoBehaviour:
   _pickups:
   - {fileID: 7170571353883357103, guid: 55e8aca901cd27a46b4e61f3210345ff, type: 3}
   - {fileID: 5212577589404435403, guid: 2a490b7b25a41144dbec8b0aeeb1137e, type: 3}
+  _idleSounds:
+  - {fileID: 8300000, guid: 90d342cf6f89440b9aa6c6ef4af6af88, type: 3}
+  - {fileID: 8300000, guid: 8c8b4012f639545b2a1f70a2082307b3, type: 3}
+  - {fileID: 8300000, guid: ad7b6eb3c723442b483e6b280fa02230, type: 3}
+  - {fileID: 8300000, guid: d254381ee39254b86b2ad79941106ced, type: 3}
+  - {fileID: 8300000, guid: 51481181258134093b3ac957766db260, type: 3}
+  - {fileID: 8300000, guid: c9bd2da8e9aef4886a02e17824e44eb1, type: 3}
+  _attackSounds:
+  - {fileID: 8300000, guid: 2628db55e50fe41cc9879051d359847a, type: 3}
+  - {fileID: 8300000, guid: 94e452828af664292a97c95ec9452126, type: 3}
+  - {fileID: 8300000, guid: 2c706f39dc7b645e0a17766d7757d4c5, type: 3}
+  - {fileID: 8300000, guid: c5e72c14120434b7d8c3248afc4851b6, type: 3}
+  - {fileID: 8300000, guid: 2e0680160a6414c50821ce2b3586bedf, type: 3}
+  - {fileID: 8300000, guid: 7666bab29b4a04b149e8f5cefdf0c6e6, type: 3}
+  _hurtSounds:
+  - {fileID: 8300000, guid: 137bb003119aa47dfb5ed791d840d650, type: 3}
+  - {fileID: 8300000, guid: 0e84038961d6c4b72af49c11e1553b9e, type: 3}
+  - {fileID: 8300000, guid: 931523c039e8648f2ae2785389e68571, type: 3}
+  - {fileID: 8300000, guid: 118b38df64aa147568f2e291e18e1713, type: 3}
+  - {fileID: 8300000, guid: 7795e8b6c77494ac6beedc8fb493a1b6, type: 3}
+  - {fileID: 8300000, guid: 840ba502ba2cf48688fa3eed24c5ffd7, type: 3}
+--- !u!82 &-3459744528858164798
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6592198861965272217}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 0.5
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 40
+  Pan2D: 0
+  rolloffMode: 1
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!136 &6592198861965272215
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3510,7 +3628,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 6592198861965283149}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.11235665
   m_Height: 0.37452215
   m_Direction: 0
@@ -3524,10 +3642,10 @@ Rigidbody:
   m_GameObject: {fileID: 6592198861965283149}
   serializedVersion: 2
   m_Mass: 1.875
-  m_Drag: 0
+  m_Drag: 1.5
   m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -3826,7 +3944,7 @@ BoxCollider:
   m_GameObject: {fileID: 6592198861965288723}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1.0373999, y: 0.5652322, z: 0.5652323}
   m_Center: {x: -0.3897828, y: 0.28261605, z: 0}
@@ -3839,10 +3957,10 @@ Rigidbody:
   m_GameObject: {fileID: 6592198861965288723}
   serializedVersion: 2
   m_Mass: 3.125
-  m_Drag: 0
+  m_Drag: 1.5
   m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -3919,7 +4037,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 6592198861965291405}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.117797144
   m_Height: 0.47118858
   m_Direction: 0
@@ -3933,10 +4051,10 @@ Rigidbody:
   m_GameObject: {fileID: 6592198861965291405}
   serializedVersion: 2
   m_Mass: 1.25
-  m_Drag: 0
+  m_Drag: 1.5
   m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -4161,7 +4279,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 6592198861965353155}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.1333612
   m_Height: 0.5334448
   m_Direction: 0
@@ -4175,10 +4293,10 @@ Rigidbody:
   m_GameObject: {fileID: 6592198861965353155}
   serializedVersion: 2
   m_Mass: 1.875
-  m_Drag: 0
+  m_Drag: 1.5
   m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -4373,7 +4491,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 6592198861965426877}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.11779759
   m_Height: 0.47119036
   m_Direction: 0
@@ -4387,10 +4505,10 @@ Rigidbody:
   m_GameObject: {fileID: 6592198861965426877}
   serializedVersion: 2
   m_Mass: 1.25
-  m_Drag: 0
+  m_Drag: 1.5
   m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -5500,7 +5618,7 @@ SphereCollider:
   m_GameObject: {fileID: 6592198861965437197}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.2826161
   m_Center: {x: -0.2826161, y: 0, z: 0}
@@ -5513,10 +5631,10 @@ Rigidbody:
   m_GameObject: {fileID: 6592198861965437197}
   serializedVersion: 2
   m_Mass: 2.24
-  m_Drag: 0
+  m_Drag: 1.5
   m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -5948,7 +6066,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 6592198861965444705}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.088060044
   m_Height: 0.44030023
   m_Direction: 0
@@ -5962,10 +6080,10 @@ Rigidbody:
   m_GameObject: {fileID: 6592198861965444705}
   serializedVersion: 2
   m_Mass: 1.25
-  m_Drag: 0
+  m_Drag: 1.5
   m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -6633,7 +6751,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 6592198861965454749}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.13592823
   m_Height: 0.5437129
   m_Direction: 0
@@ -6647,10 +6765,10 @@ Rigidbody:
   m_GameObject: {fileID: 6592198861965454749}
   serializedVersion: 2
   m_Mass: 1.875
-  m_Drag: 0
+  m_Drag: 1.5
   m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
@@ -6742,7 +6860,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 6592198861965454945}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.08806008
   m_Height: 0.4403004
   m_Direction: 0
@@ -6756,10 +6874,10 @@ Rigidbody:
   m_GameObject: {fileID: 6592198861965454945}
   serializedVersion: 2
   m_Mass: 1.25
-  m_Drag: 0
+  m_Drag: 1.5
   m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
