@@ -9,6 +9,8 @@ public class Zombie : MonoBehaviour
     private float _health = 50f;
     private float _attackRate = 1.5f;
     private float _attackTimer;
+    private float _idleSoundTimer = 3f;
+    private float _nextTimeToIdleSound;
     private bool _isDead = false;
 
     [SerializeField]
@@ -21,8 +23,16 @@ public class Zombie : MonoBehaviour
     private Transform _target;
     private NavMeshAgent _agent;
     private GameObject _spawnManager;
+    private AudioSource _audioSource;
     [SerializeField]
     private GameObject[] _pickups;
+
+    [SerializeField]
+    private AudioClip[] _idleSounds;
+    [SerializeField]
+    private AudioClip[] _attackSounds;
+    [SerializeField]
+    private AudioClip[] _hurtSounds;
 
     private void Start()
     {
@@ -41,7 +51,11 @@ public class Zombie : MonoBehaviour
         {
             Debug.LogError("Zombie::Start() Collider is null");
         }
-
+        _audioSource = GetComponent<AudioSource>();
+        if (_audioSource == null)
+        {
+            Debug.LogError("Zombie::Start() Audio Source is null");
+        }
         _spawnManager = GameObject.FindWithTag("SpawnManager");
         if (_spawnManager == null)
         {
@@ -51,6 +65,7 @@ public class Zombie : MonoBehaviour
         _agent.speed = 4.5f;
         _animator.SetBool("Walking_b", false);
         _attackTimer = _attackRate;
+        _nextTimeToIdleSound = _idleSoundTimer;
         _target = PlayerManager.instance.player.transform;
     }
 
@@ -74,6 +89,8 @@ public class Zombie : MonoBehaviour
                     if (_attackTimer <= 0)
                     {
                         PlayerManager.instance.player.GetComponent<PlayerController>().TakeDamage(8f);
+                        _audioSource.clip = _attackSounds[Random.Range(0, 6)];
+                        _audioSource.Play();
                         _attackTimer = _attackRate;
                     }
                     FaceTarget();
@@ -83,6 +100,19 @@ public class Zombie : MonoBehaviour
                         GetComponent<Collider>().enabled = false;
                     }
                 }
+                else if (distance > _agent.stoppingDistance + 10)
+                {
+                    if (_nextTimeToIdleSound > 0)
+                    {
+                        _nextTimeToIdleSound -= Time.deltaTime;
+                    }
+                    else if (_nextTimeToIdleSound <= 0 && Random.Range(0f, 100f) <= 0.55f)
+                    {
+                        _nextTimeToIdleSound = _idleSoundTimer;
+                        _audioSource.clip = _idleSounds[Random.Range(0, 6)];
+                        _audioSource.Play();
+                    }
+                }
 
             }
             else
@@ -90,6 +120,10 @@ public class Zombie : MonoBehaviour
                 _animator.SetBool("Walking_b", false);
                 _agent.SetDestination(this.transform.position);
             }
+        } else
+        {
+            _animator.SetBool("Walking_b", false);
+            _agent.SetDestination(this.transform.position);
         }
     }
 
@@ -103,6 +137,8 @@ public class Zombie : MonoBehaviour
     public void TakeDamage(float damage)
     {
         _health -= damage;
+        _audioSource.clip = _hurtSounds[Random.Range(0, 6)];
+        _audioSource.Play();
 
         if (_health <= 0f)
         {

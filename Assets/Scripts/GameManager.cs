@@ -132,6 +132,7 @@ public class GameManager : MonoBehaviour
     public void EndSequence()
     {
         _audioSource.clip = _music[2];
+        _audioSource.volume = 0.25f;
         _audioSource.Play();
         _ui.transform.Find("Credits").GetComponent<Animator>().SetTrigger("StartCredits");
     }

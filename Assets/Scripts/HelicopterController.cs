@@ -24,6 +24,10 @@ public class HelicopterController : MonoBehaviour
     private GameObject _playerExit;
     private bool _endSequenceStarted = false;
     private Camera _camera;
+    private AudioSource _audioSource;
+    [SerializeField]
+    private AudioClip _helicopterSound;
+    private Animator _audioAnim;
 
 
     // Start is called before the first frame update
@@ -33,6 +37,10 @@ public class HelicopterController : MonoBehaviour
         _doorOpenPos = new Vector3(_door.transform.localPosition.x, _door.transform.localPosition.y, _door.transform.localPosition.z + 2.81f);
         _doorClosePos = new Vector3(_door.transform.localPosition.x, _door.transform.localPosition.y, _door.transform.localPosition.z);
         transform.localRotation = Quaternion.Euler(20, 0, 0);
+        _audioSource = GetComponent<AudioSource>();
+        _audioAnim = GetComponent<Animator>();
+        if (_audioSource == null) Debug.LogError("HelicopterController::Start() Audio Source is null");
+        if (_audioAnim == null) Debug.LogError("HelicopterController::Start() Animator is null");
     }
 
     // Update is called once per frame
@@ -95,6 +103,7 @@ public class HelicopterController : MonoBehaviour
         if (_camera.transform.IsChildOf(this.transform) && _startPath)
         {
             _startPath = false;
+            _audioAnim.SetTrigger("HeliSoundTrigger");
             StartCoroutine(GetPlayerIntoHeli());
         }
     }
@@ -102,6 +111,9 @@ public class HelicopterController : MonoBehaviour
     public void StartMovement()
     {
         _startPath = true;
+        _audioSource.clip = _helicopterSound;
+        _audioSource.Play();
+        Debug.Log("Playing Heli Sound");
     }
 
     private void StartOpenDoor()
