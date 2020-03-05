@@ -7,6 +7,10 @@ public class Zombie : MonoBehaviour
 {
     [SerializeField]
     private float _health = 50f;
+    [SerializeField]
+    private float _damageValue = 8f;
+    [SerializeField]
+    private float _speedValue = 4.5f;
     private float _attackRate = 1.5f;
     private float _attackTimer;
     private float _idleSoundTimer = 3f;
@@ -62,7 +66,7 @@ public class Zombie : MonoBehaviour
             Debug.LogError("Zombie::Start() Spawn Manager is null");
         }
 
-        _agent.speed = 4.5f;
+        _agent.speed = _speedValue;
         _animator.SetBool("Walking_b", false);
         _attackTimer = _attackRate;
         _nextTimeToIdleSound = _idleSoundTimer;
@@ -88,7 +92,7 @@ public class Zombie : MonoBehaviour
                 {
                     if (_attackTimer <= 0)
                     {
-                        PlayerManager.instance.player.GetComponent<PlayerController>().TakeDamage(8f);
+                        PlayerManager.instance.player.GetComponent<PlayerController>().TakeDamage(_damageValue);
                         _audioSource.clip = _attackSounds[Random.Range(0, 6)];
                         _audioSource.Play();
                         _attackTimer = _attackRate;
