@@ -47,6 +47,9 @@ public class GameManager : MonoBehaviour
     private bool _heliStarted = false;
     private bool _playerDead = false;
 
+    [SerializeField]
+    private GameObject _endZombies;
+
     private SCENES _currentScene;
     // Start is called before the first frame update
     void Start()
@@ -175,7 +178,7 @@ public class GameManager : MonoBehaviour
         string sec = (_timer % 60).ToString("f2");
         if (_timer > 0f)
         {
-            _ui.transform.Find("TimerText").GetComponent<Text>().text = "Time until exfil: " + min + ":" + sec;
+            _ui.transform.Find("TimerText").GetComponent<Text>().text = "Exfil: " + min + ":" + sec;
         }
         else
         {
@@ -204,6 +207,11 @@ public class GameManager : MonoBehaviour
     public void EndGame()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
+    }
+
+    public void EnableEndZombies()
+    {
+        _endZombies.SetActive(true);
     }
 
     IEnumerator RestartLevel()

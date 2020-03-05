@@ -16,6 +16,7 @@ public class Zombie : MonoBehaviour
     private float _idleSoundTimer = 3f;
     private float _nextTimeToIdleSound;
     private bool _isDead = false;
+    private bool _isIdle = false;
 
     [SerializeField]
     private GameObject[] _bodyParts;
@@ -26,6 +27,8 @@ public class Zombie : MonoBehaviour
 
     private Transform _target;
     private NavMeshAgent _agent;
+    private float _idleX;
+    private float _idleZ;
     private GameObject _spawnManager;
     private AudioSource _audioSource;
     [SerializeField]
@@ -77,6 +80,7 @@ public class Zombie : MonoBehaviour
     {
         if (!_isDead && _target != null)
         {
+            _isIdle = false;
             float distance = Vector3.Distance(this.transform.position, _target.transform.position);
             if (_attackTimer > 0)
             {
@@ -127,8 +131,12 @@ public class Zombie : MonoBehaviour
             }
         } else
         {
-            _animator.SetBool("Walking_b", false);
-            _agent.SetDestination(this.transform.position);
+            if (!_isIdle)
+            {
+                _isIdle = true;
+                _animator.SetBool("Walking_b", false);
+                StartCoroutine(IdleWalk());
+            }
         }
     }
 
@@ -166,6 +174,29 @@ public class Zombie : MonoBehaviour
             }
             Destroy(this.gameObject, 20f);
         }
+    }
+
+    IEnumerator IdleWalk()
+    {
+        do
+        {
+            _agent.speed = 1.5f;
+            _idleX = Random.Range(-10f, 10f);
+            _idleZ = Random.Range(-10f, 10f);
+            _agent.SetDestination(new Vector3(this.transform.position.x + _idleX, this.transform.position.y, this.transform.position.z + _idleZ));
+            _animator.SetBool("Walking_b", true);
+            do
+            {
+                Vector3 _lastPos = this.transform.position;
+                yield return null;
+                if (_lastPos == this.transform.position)
+                {
+                    break;
+                }
+            } while (this.transform.position != _agent.destination);
+            _animator.SetBool("Walking_b", false);
+            yield return new WaitForSeconds(Random.Range(0.5f, 1.5f));
+        } while (_isIdle);
     }
 
     void OnDrawGizmosSelected()

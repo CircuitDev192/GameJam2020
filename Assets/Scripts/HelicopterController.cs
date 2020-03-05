@@ -153,6 +153,8 @@ public class HelicopterController : MonoBehaviour
 
     IEnumerator GetPlayerIntoHeli()
     {
+        bool _startEndPath = false;
+        GameManager.instance.EnableEndZombies();
         Vector3 _cameraEndPos = new Vector3(-0.44f, 2.98f, -0.45f);
         Quaternion _cameraEndRot = Quaternion.Euler(25.1f, -131.59f, 3.75f);
         while (_camera.transform.localRotation != _cameraEndRot || _camera.transform.localPosition != _cameraEndPos)
@@ -161,9 +163,23 @@ public class HelicopterController : MonoBehaviour
             _camera.transform.localPosition = Vector3.MoveTowards(_camera.transform.localPosition, _cameraEndPos, 3 * Time.deltaTime);
             if (_camera.transform.localPosition == _cameraEndPos)
             {
-                _endPath = true;
+                if (!_startEndPath)
+                {
+                    _startEndPath = true;
+                    StartCoroutine(StartEndPath());
+                }
+            }
+            if (RenderSettings.fogEndDistance < 300f)
+            {
+                RenderSettings.fogEndDistance += 50 * Time.deltaTime;
             }
             yield return null;
         }
+    }
+
+    IEnumerator StartEndPath()
+    {
+        yield return new WaitForSeconds(1.5f);
+        _endPath = true;
     }
 }
