@@ -112,6 +112,11 @@ public class GameManager : MonoBehaviour
                 deathCamEndRot = _mainCamera.transform.position;
             }
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
     }
 
     public void DestroyPlayer()
