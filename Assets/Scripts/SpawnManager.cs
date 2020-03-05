@@ -29,6 +29,11 @@ public class SpawnManager : MonoBehaviour
         _isSpawning = false;
     }
 
+    public void SetMaxZombies(int maxZombies)
+    {
+        _maxZombies = maxZombies;
+    }
+
     IEnumerator SpawnZombies()
     {
         while (_isSpawning)

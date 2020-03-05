@@ -150,6 +150,18 @@ public class GameManager : MonoBehaviour
         {
             _timer -= Time.deltaTime;
         }
+
+        if (_timer < _timer * 0.75f)
+        {
+            _spawnManager.SetMaxZombies(25);
+        } else if (_timer < _timer * 0.50f)
+        {
+            _spawnManager.SetMaxZombies(30);
+        } else if (_timer < _timer * 0.25f)
+        {
+            _spawnManager.SetMaxZombies(35);
+        }
+
         if (_timer < 30f && !_heliStarted)
         {
             _heliStarted = true;

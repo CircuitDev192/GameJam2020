@@ -2801,7 +2801,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a9077ea08e233c84990b187d826a39d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 50
+  _health: 75
+  _damageValue: 8
+  _speedValue: 3
   _bodyParts:
   - {fileID: 5519197506307510377}
   - {fileID: 5519197506307538493}
