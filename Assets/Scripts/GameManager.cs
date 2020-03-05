@@ -87,10 +87,13 @@ public class GameManager : MonoBehaviour
     {
         if (_currentScene == SCENES.GAME)
         {
-            UpdateTimer();
-            DisplayTimer();
-            UpdateAmmo();
-            UpdateHealth();
+            if (PlayerManager.instance.player != null)
+            {
+                UpdateTimer();
+                DisplayTimer();
+                UpdateAmmo();
+                UpdateHealth();
+            }
             if (PlayerManager.instance.player.transform.GetComponent<PlayerController>().GetHealth() <= 0f)
             {
                 PlayerManager.instance.playerMovementScript.GetComponent<FirstPersonAIO>().enabled = false;
