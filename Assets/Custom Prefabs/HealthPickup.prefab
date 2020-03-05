@@ -105,7 +105,7 @@ GameObject:
   - component: {fileID: 7590818673024379510}
   - component: {fileID: 7590818673025413232}
   - component: {fileID: 4882008636871925782}
-  - component: {fileID: 1566460005440493472}
+  - component: {fileID: 798845398538698639}
   m_Layer: 0
   m_Name: HealthPickup
   m_TagString: Untagged
@@ -188,8 +188,8 @@ MonoBehaviour:
   _isAmmo: 0
   _pointA: {fileID: 5212577590267475454}
   _pointB: {fileID: 5212577588539677528}
---- !u!135 &1566460005440493472
-SphereCollider:
+--- !u!65 &798845398538698639
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -199,5 +199,5 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
-  m_Center: {x: 0, y: 0.11820353, z: 0.00000011920929}
+  m_Size: {x: 2, y: 0.33494562, z: 2}
+  m_Center: {x: 0, y: 0.23, z: 0.00000011920929}

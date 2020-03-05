@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2787403852257900355}
   - component: {fileID: 2787403852258875715}
   - component: {fileID: 2787403852256865290}
-  - component: {fileID: 2249759907373663076}
+  - component: {fileID: 1122157542145816948}
   m_Layer: 0
   m_Name: AmmoModel
   m_TagString: Untagged
@@ -95,8 +95,8 @@ MonoBehaviour:
   _isAmmo: 1
   _pointA: {fileID: 7170571355151128986}
   _pointB: {fileID: 7170571353152812860}
---- !u!135 &2249759907373663076
-SphereCollider:
+--- !u!65 &1122157542145816948
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -106,7 +106,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 1
+  m_Size: {x: 2, y: 0.33494562, z: 2}
   m_Center: {x: 0, y: 0.11820353, z: 0.00000011920929}
 --- !u!1 &7170571353152812860
 GameObject:
