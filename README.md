@@ -1,7 +1,7 @@
 # JUST HOLD ON
-###Matthew Ashmore
+### Matthew Ashmore
 
-###MSU Game Design Game Jam 2020
+### MSU Game Design Game Jam 2020
 
 JUST HOLD ON is a short, first person zombie apocalypse survival shooter. 
 The city in which the game takes place is the epicenter of a global virus outbreak. There are few survivors left.
@@ -18,10 +18,10 @@ The controls are typical FPS controls:
 - LMB - Shoot
 - Space - Jump
 
-#Title Screen
+# Title Screen
 ![](https://raw.githubusercontent.com/CircuitDev192/GameJam2020/master/Screenshots/Title%20Screen.png)
 
-#In-Game Screenshots
+# In-Game Screenshots
 ![](https://raw.githubusercontent.com/CircuitDev192/GameJam2020/master/Screenshots/JHO%20demo/vlcsnap-2020-03-05-21h11m26s633.png)
 
 ![](https://raw.githubusercontent.com/CircuitDev192/GameJam2020/master/Screenshots/JHO%20demo/vlcsnap-2020-03-05-21h12m06s100.png)
