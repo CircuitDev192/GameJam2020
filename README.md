@@ -47,6 +47,8 @@ The controls are typical FPS controls:
 
 # Links
 
-A video demo of the final build can be seen [here on Youtube.](https://youtu.be/KW5Y4CjZC6E "here on Youtube.")
+A video demo of the final build can be seen [here on Youtube.](https://youtu.be/KW5Y4CjZC6E "Final Demo")
 
-The final x86 build of the game can be downloaded as a .zip directly [from this Google Drive link.](https://drive.google.com/file/d/1xLy746HhHjI9DZ_QgqK0USfV_QPwUHGg/view?usp=sharing "from this Google Drive link.")
+The making of JUST HOLD ON is also documented briefly in [this Youtube video.](https://youtu.be/bBeCvDoeiro "The Making Of JUST HOLD ON")
+
+The final x86 build of the game can be downloaded as a .zip directly [from this Google Drive link.](https://drive.google.com/file/d/1xLy746HhHjI9DZ_QgqK0USfV_QPwUHGg/view?usp=sharing "Direct Windows x86 Download")
