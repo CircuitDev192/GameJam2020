@@ -23,3 +23,8 @@ Mouse - Aim
 LMB - Shoot
 
 Space - Jump
+
+
+The final build of the game can be downloaded directly from here:
+
+https://drive.google.com/file/d/1xLy746HhHjI9DZ_QgqK0USfV_QPwUHGg/view?usp=sharing
