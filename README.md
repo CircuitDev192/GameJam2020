@@ -18,6 +18,9 @@ The controls are typical FPS controls:
 - LMB - Shoot
 - Space - Jump
 
+# Initial Ideas Leading Up to the Game
+![](https://raw.githubusercontent.com/CircuitDev192/GameJam2020/master/Ideas.png)
+
 # Title Screen
 ![](https://raw.githubusercontent.com/CircuitDev192/GameJam2020/master/Screenshots/Title%20Screen.png)
 
